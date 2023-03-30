@@ -12,7 +12,17 @@ const attendance_finder = require("./attendance_finder");
 const excelmaker = require("./excelmaker")
 const data = require("./sheet_data")
 const app = express();
-const PORT = 8000;
+// const PORT = 8000;
+const PORT = process.env.PORT || 8000;
+
+//cross-orign request handler
+const corsOptions = {
+  origin:'*',
+  methods:['GET','POST'],
+  allowedHeaders:['content-Type','Authorization']
+};
+app.use(cors(corsOptions));
+
 const bodyParser = require('body-parser');
 
 
@@ -26,7 +36,7 @@ const inserter = (arr) =>{
 
 //middlewares-------------
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,17 +45,11 @@ app.use(bodyParser.json());
 
 
 
-//cross-orign request handler
-const corsOptions = {
-  origin:'http://localhost:3000',
-  methods:['GET','POST'],
-  allowedHeaders:['content-Type','Authorization']
-};
-app.use(cors(corsOptions));
+
 
 //starting the server
 //listening on port 3000
-app.listen(PORT, ()=>{console.log(`RUNNING EXPRESS SERVER ON PORT ${PORT}`)});
+app.listen(PORT, '0.0.0.0' ,()=>{console.log(`RUNNING EXPRESS SERVER ON PORT ${PORT}`)});
 
 app.get('/api/documents', async (req, res) => {
      let result = await query_documents();
