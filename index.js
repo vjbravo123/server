@@ -188,6 +188,3 @@ app.get("/",(req , res)=>{
   res.json({"name":"vivek"})
 });
 
-app.get("/abhineet",(req , res)=>{
-  res.json({"lodika":"abhineet mere lode pe"})
-});
